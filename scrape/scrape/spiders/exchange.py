@@ -1,0 +1,103 @@
+import scrapy
+from scrapy_playwright.page import PageMethod
+
+
+class ExchangeSpider(scrapy.Spider):
+    name = "exchange"
+    allowed_domains = ["coinmarketcap.com"]
+
+    def __init__(self, from_coin=None, to_coin=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if not from_coin:
+            raise ValueError("from_coin is required")
+
+        if not to_coin:
+            raise ValueError("to_coin is required")
+
+        self.from_coin = from_coin
+        self.to_coin = to_coin
+        self.start_urls = [
+            "https://coinmarketcap.com/converter/"
+        ]
+
+    def start_requests(self):
+        for url in self.start_urls:
+            yield scrapy.Request(
+                url,
+                meta={
+                    "playwright": True,
+                    "playwright_include_page": True,
+                    "playwright_page_goto_kwargs": {
+                        "wait_until": "networkidle",
+                    },
+                },
+                callback=self.parse,
+            )
+
+    async def parse(self, response):
+        page = response.meta["playwright_page"]
+
+        inp = page.locator(
+            'xpath=//div[contains(@class,"cmc-body-wrapper")]//input[@type="number"]'
+        )
+        await inp.wait_for()
+        await inp.fill("1")
+
+        inp = page.locator(
+            'xpath=//*[@id="react-select-cmc-select__from-input"]'
+        )
+        await inp.wait_for()
+        await inp.fill(self.from_coin)
+
+        loc = page.locator(
+            'xpath=//div[contains(@class,"cmc-body-wrapper")]//div[contains(@class,"cmc-select__group")]//div[contains(@class,"cmc-select__option")]'
+        ).nth(0)
+        await loc.wait_for()
+        await loc.click()
+
+        inp = page.locator(
+            'xpath=//*[@id="react-select-cmc-select__to-input"]'
+        )
+        await inp.wait_for()
+        await inp.fill(self.to_coin)
+
+        loc = page.locator(
+            'xpath=//div[contains(@class,"cmc-body-wrapper")]//div[contains(@class,"cmc-select__group")]//div[contains(@class,"cmc-select__option")]'
+        ).nth(0)
+        await loc.wait_for()
+        await loc.click()
+
+        await page.locator(
+            'xpath=//em[contains(@class,"cmc-converter__conversion-result")]'
+        ).nth(0).wait_for()
+
+        html = await page.content()
+        response = response.replace(body=html)
+
+        from_coin_res = " ".join(
+            t.strip()
+            for t in response.xpath(
+                '//div[contains(@class,"cmc-converter")]'
+                '//div[contains(@class,"converter__text-row")]'
+                '//div/text()'
+            ).getall()[:2]
+            if t.strip()
+        )
+
+        yield {
+            "FromCoin": from_coin_res,
+            "ToCoin": (
+                (response.xpath(
+                    '//em[contains(@class,"cmc-converter__conversion-result")]/text()'
+                ).get() or "")
+                +
+                (response.xpath(
+                    '//div[contains(@class,"cmc-converter")]'
+                    '//div[contains(@class,"converter__text-row")]'
+                    '//div[3]/text()'
+                ).get() or "")
+            ),
+        }
+
+        await page.close()
