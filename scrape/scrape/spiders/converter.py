@@ -2,8 +2,8 @@ import scrapy
 from scrapy_playwright.page import PageMethod
 
 
-class ExchangeSpider(scrapy.Spider):
-    name = "exchange"
+class ConvertSpider(scrapy.Spider):
+    name = "converter"
     allowed_domains = ["coinmarketcap.com"]
 
     def __init__(self, from_coin=None, to_coin=None, *args, **kwargs):

@@ -3,7 +3,7 @@ from scrape.core.runner import ScraperRunner
 from scrape.scrape.spiders.SymbolSearch import SymbolSearchSpider
 from scrape.scrape.spiders.top_price import TopPriceSpider
 from scrape.scrape.spiders.top_profit import TopProfitSpider
-from scrape.scrape.spiders.exchange import ExchangeSpider
+from crypto_crawler.scrape.scrape.spiders.converter import ExchangeSpider
 
 from simple_term_menu import TerminalMenu
 
@@ -67,12 +67,12 @@ def top_10_by_price_change(runner: ScraperRunner):
     else:
         print(res)
 
-def exchange(runner: ScraperRunner):
+def converter(runner: ScraperRunner):
     from_coin = input("From Crypto: ")
     to_coin = input("To Crypto: ")
     try:
         job = runner.submit(
-            ExchangeSpider,
+            ConvertSpider,
             from_coin=from_coin,
             to_coin=to_coin,
         )
