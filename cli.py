@@ -3,7 +3,7 @@ from scrape.core.runner import ScraperRunner
 from scrape.scrape.spiders.SymbolSearch import SymbolSearchSpider
 from scrape.scrape.spiders.top_price import TopPriceSpider
 from scrape.scrape.spiders.top_profit import TopProfitSpider
-from crypto_crawler.scrape.scrape.spiders.converter import ExchangeSpider
+from scrape.scrape.spiders.converter import ConvertSpider
 
 from simple_term_menu import TerminalMenu
 
