@@ -1,69 +1,88 @@
-# CoinMarketCap crawler W/scrapy
+# 🚀 CoinMarketCap Crawler
 
-## Installation
+A modern **CoinMarketCap** crawler built with **Scrapy** and **Playwright** for scraping cryptocurrency data from dynamic pages.
 
-Clone the repository:
+---
+
+## ✨ Features
+
+- 🪙 Search cryptocurrencies by symbol
+- 💵 Get the Top 10 highest-priced cryptocurrencies
+- 📈 Find the Top 10 biggest gainers
+- 🔄 Convert one cryptocurrency to another
+- 📋 Extract all listed cryptocurrencies and their metadata
+- ⚡ Fast asynchronous crawling powered by Scrapy + Playwright
+
+---
+
+# 📦 Installation
+
+## 1. Clone the repository
 
 ```bash
 git clone https://github.com/Null-bash/coinmarketcap_crawler.git
 cd coinmarketcap_crawler
 ```
 
-Create and activate a virtual environment:
+## 2. Create a virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-Linux/macOS:
+### Linux / macOS
 
 ```bash
 source venv/bin/activate
 ```
 
-Windows:
+### Windows
 
-```bash
+```cmd
 venv\Scripts\activate
 ```
 
-Install the required dependencies:
+## 3. Install the dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Install a Playwright browser:
+## 4. Install a Playwright browser
 
 ```bash
 playwright install <browser>
 ```
 
-Available browser names include:
+Available browsers:
 
-* `chromium`
-* `firefox`
-* `webkit`
+- `chromium` *(recommended)*
+- `firefox`
+- `webkit`
 
-> **Note:** If you are in Iran, this command may fail because Playwright downloads are blocked. Use a VPN or proxy before running the command.
+> **Note**
+>
+> If you're located in **Iran**, Playwright downloads may be blocked. Use a **VPN** or configure a **proxy** before running the command.
 
-## Environment Variables
+---
 
-Copy the example environment file:
+# ⚙️ Configuration
 
-Linux/macOS:
+Copy the example environment file.
+
+### Linux / macOS
 
 ```bash
 cp .env.example .env
 ```
 
-Windows:
+### Windows
 
 ```cmd
 copy .env.example .env
 ```
 
-Edit the `.env` file as needed:
+Example:
 
 ```env
 PLAYWRIGHT_BROWSER_TYPE=chromium
@@ -72,97 +91,132 @@ PLAYWRIGHT_BROWSER_PATH=
 HEADLESS=True
 ```
 
-### `PLAYWRIGHT_BROWSER_TYPE`
+---
 
-Specifies which **Playwright bundled browser** to use.
+## `PLAYWRIGHT_BROWSER_TYPE`
 
-Example:
+Selects which Playwright browser to launch.
 
 ```env
-PLAYWRIGHT_BROWSER_TYPE=firefox
+PLAYWRIGHT_BROWSER_TYPE=chromium
 ```
 
-This option is used when the browser has been installed with:
+Install the corresponding browser first:
 
 ```bash
-playwright install firefox
+playwright install chromium
 ```
 
 Supported values:
 
-* `chromium`
-* `firefox`
-* `webkit`
+- `chromium`
+- `firefox`
+- `webkit`
 
-### `PLAYWRIGHT_BROWSER_PATH`
+---
 
-Optional.
+## `PLAYWRIGHT_BROWSER_PATH`
 
-If you want to use a browser already installed on your system instead of the Playwright bundled browser, specify its executable path.
+**Optional**
 
-Examples:
+Use an existing browser installation instead of the Playwright-managed browser.
 
-**Linux**
+### Linux
 
 ```env
 PLAYWRIGHT_BROWSER_PATH=/usr/bin/google-chrome
 ```
 
-**macOS**
+### macOS
 
 ```env
 PLAYWRIGHT_BROWSER_PATH=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
 ```
 
-**Windows**
+### Windows
 
 ```env
 PLAYWRIGHT_BROWSER_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe
 ```
 
-When this variable is set, it takes precedence over `PLAYWRIGHT_BROWSER_TYPE`.
+When this variable is set, it overrides `PLAYWRIGHT_BROWSER_TYPE`.
 
-### `HEADLESS`
+---
 
-Controls whether the browser runs with or without a visible window.
+## `HEADLESS`
+
+Controls whether Playwright launches the browser with or without a GUI.
 
 ```env
 HEADLESS=True
 ```
 
-* `True` — Run the browser in headless mode (recommended for production).
-* `False` — Open the browser window (recommended for debugging).
+| Value | Description |
+|:------|:------------|
+| `True` | Runs the browser in headless mode *(recommended)* |
+| `False` | Opens the browser window *(useful for debugging)* |
 
-## Running the Project
+---
 
-Run the CLI interface:
+# ▶️ Running the Project
+
+Start the CLI application:
 
 ```bash
 python cli.py
 ```
 
+---
 
-## Scrapy Spiders
+# 🕷 Available Spiders
 
-### `all_symbols`
+## `all_symbols`
 
-Extracting all coins infos like price and link.
+Extracts information for all cryptocurrencies, including:
 
-> This spider is not available through the CLI interface.
+- Name
+- Symbol
+- CoinMarketCap URL
 
-### `SymbolSearching
-Searches for a coin using its symbol.
+> **Note:** This spider is intended for internal use and is **not available** through the CLI.
 
-It reads the corresponding `url_path` from `data/all_crypto.csv` and then extracts the coin's information from CoinMarketCap.
+---
 
-### `top_price`
+## `SymbolSearching`
 
-Returns the 10 coins with the highest prices.
+Searches for a cryptocurrency by its symbol.
 
-### `top_profit`
+The spider looks up the corresponding `url_path` inside `data/all_crypto.csv`, visits the CoinMarketCap page, and extracts the latest information.
 
-Returns the 10 coins with the highest positive percentage change.
+---
 
-### `exchange`
+## `top_price`
 
-Converts one cryptocurrency to another.
+Returns the **10 highest-priced cryptocurrencies**.
+
+---
+
+## `top_profit`
+
+Returns the **10 cryptocurrencies with the highest positive percentage change**.
+
+---
+
+## `converter`
+
+Converts one cryptocurrency into another using CoinMarketCap's converter.
+
+---
+
+# 🛠 Tech Stack
+
+- Python
+- Scrapy
+- Playwright
+- scrapy-playwright
+
+---
+
+## 📄 License
+
+This project is intended for educational and personal use. Please respect CoinMarketCap's Terms of Service when scraping their website.
