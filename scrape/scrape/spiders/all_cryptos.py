@@ -3,8 +3,8 @@ from scrapy_playwright.page import PageMethod
 from scrape.utils.script import scrolling_script
 
 
-class AllCoinsSpider(scrapy.Spider):
-    name = "all_coins"
+class AllCryptoSpider(scrapy.Spider):
+    name = "all_crypto"
     allowed_domains = ["coinmarketcap.com"]
 
     def __init__(self, to_page=81, *args, **kwargs):

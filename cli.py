@@ -1,6 +1,6 @@
 from scrape.core.runner import ScraperRunner
 
-from scrape.scrape.spiders.SymbolSearch import SymbolSearchSpider
+from scrape.scrape.spiders.symbol_search import SymbolSearchSpider
 from scrape.scrape.spiders.top_price import TopPriceSpider
 from scrape.scrape.spiders.top_profit import TopProfitSpider
 from scrape.scrape.spiders.converter import ConvertSpider

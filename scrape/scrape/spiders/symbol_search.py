@@ -4,7 +4,7 @@ from scrape.utils.all_crypto import get_url_by_sym
 
 
 class SymbolSearchSpider(scrapy.Spider):
-    name = "Symbolsearch"
+    name = "symbol_search"
     allowed_domains = ["coinmarketcap.com"]
 
     def __init__(self, symbol=None, *args, **kwargs):
