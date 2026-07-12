@@ -66,32 +66,6 @@ Available browsers:
 
 ---
 
-# ⚙️ Configuration
-
-Copy the example environment file.
-
-### Linux / macOS
-
-```bash
-cp .env.example .env
-```
-
-### Windows
-
-```cmd
-copy .env.example .env
-```
-
-Example:
-
-```env
-PLAYWRIGHT_BROWSER_TYPE="chromium"
-PLAYWRIGHT_BROWSER_PATH=
-
-HEADLESS=True
-```
-
----
 
 ## `PLAYWRIGHT_BROWSER_TYPE`
 
@@ -285,7 +259,7 @@ The recommended workflow is:
 
 1. Run `all_cryptos` to generate or update the local cryptocurrency database.
     you cab run this part with :
-    
+
     ```bash
     python all_cryptos.py
     ```
