@@ -93,7 +93,7 @@ def menu(options, runner: ScraperRunner):
         elif choice == 2:
             top_10_by_price_change(runner)
         elif choice == 3:
-            exchange(runner)
+            converter(runner)
         else:
             break
 
