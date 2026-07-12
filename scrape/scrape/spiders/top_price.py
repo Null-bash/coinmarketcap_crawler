@@ -13,7 +13,7 @@ class TopPriceSpider(scrapy.Spider):
             "https://coinmarketcap.com"
         ]
 
-    def start_requests(self):
+    async def start(self):
         for url in self.start_urls:
             yield scrapy.Request(
                 url,

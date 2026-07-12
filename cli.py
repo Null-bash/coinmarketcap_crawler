@@ -33,7 +33,7 @@ options = [
 
 
 def search_for_coin(runner: ScraperRunner):
-    symbol = input("Coin symbol: ")
+    symbol = input("Crypto symbol: ")
     try:
         job = runner.submit(
             SymbolSearchSpider,
