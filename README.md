@@ -285,6 +285,7 @@ The recommended workflow is:
 
 1. Run `all_cryptos` to generate or update the local cryptocurrency database.
     you cab run this part with :
+    
     ```bash
     python all_cryptos.py
     ```
