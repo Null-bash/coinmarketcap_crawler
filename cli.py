@@ -45,25 +45,62 @@ def search_for_coin(runner: ScraperRunner):
     else:
         print(res)
 
-def top_10_by_price(runner: ScraperRunner):
+def top_by_price(runner: ScraperRunner):
+    while True:
+        try:
+            number_of_coins = int(
+                input("How many coins do you want (1-100): ")
+            )
+
+            if 1 <= number_of_coins <= 100:
+                break
+
+            print("Number must be between 1 and 100.")
+
+        except ValueError:
+            print("Please enter a valid number.")
+
     try:
-        job = runner.submit(TopPriceSpider)
+        job = runner.submit(
+            TopPriceSpider,
+            number_of_coins=number_of_coins,
+        )
         res = job.result()
+
     except Exception as e:
         print(e)
+
     else:
         print(res)
 
-def top_10_by_price_change(runner: ScraperRunner):
+def top_by_price_change(runner: ScraperRunner):
     tdomain = input("Time range (1h/24h/7d): ")
+
+    while True:
+        try:
+            number_of_coins = int(
+                input("How many coins do you want (1-100): ")
+            )
+
+            if 1 <= number_of_coins <= 100:
+                break
+
+            print("Number must be between 1 and 100.")
+
+        except ValueError:
+            print("Please enter a valid number.")
+
     try:
         job = runner.submit(
             TopProfitSpider,
             tdomain=tdomain,
+            number_of_coins=number_of_coins,
         )
         res = job.result()
+
     except Exception as e:
         print(e)
+
     else:
         print(res)
 
@@ -89,9 +126,9 @@ def menu(options, runner: ScraperRunner):
         if choice == 0:
             search_for_coin(runner)
         elif choice == 1:
-            top_10_by_price(runner)
+            top_by_price(runner)
         elif choice == 2:
-            top_10_by_price_change(runner)
+            top_by_price_change(runner)
         elif choice == 3:
             converter(runner)
         else:

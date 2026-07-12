@@ -6,8 +6,13 @@ class TopPriceSpider(scrapy.Spider):
     name = "top_price"
     allowed_domains = ["coinmarketcap.com"]
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, number_of_coins=10, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.number_of_coins = int(number_of_coins)
+
+        if not (1 <= self.number_of_coins <= 100):
+            raise ValueError("number_of_coins must be between 1 and 100.")
 
         self.start_urls = [
             "https://coinmarketcap.com"
@@ -61,7 +66,7 @@ class TopPriceSpider(scrapy.Spider):
 
         for cursor in response.xpath(
             '//table[contains(@class,"cmc-table")]//tbody[1]//tr'
-        )[:10]:
+        )[:self.number_of_coins]:
             yield {
                 "Name": cursor.xpath(
                     './/p[contains(@class,"coin-item-name")]/text()'

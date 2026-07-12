@@ -203,7 +203,7 @@ This spider allows users to quickly retrieve detailed information about a specif
 
 ## `top_price`
 
-Retrieves the **10 highest-priced cryptocurrencies** currently listed on CoinMarketCap.
+Retrieves the **{number(1,100)} highest-priced cryptocurrencies** currently listed on CoinMarketCap.
 
 Useful for:
 
@@ -215,7 +215,7 @@ Useful for:
 
 ## `top_profit`
 
-Retrieves the **10 cryptocurrencies with the highest positive percentage gain** over the selected time period.
+Retrieves the **top {number(1,100)} cryptocurrencies with the highest positive percentage gain** over the selected time period.
 
 This spider is useful for:
 

@@ -13,16 +13,21 @@ class TopProfitSpider(scrapy.Spider):
     name = "top_profit"
     allowed_domains = ["coinmarketcap.com"]
 
-    def __init__(self, tdomain, *args, **kwargs):
+    def __init__(self, tdomain, number_of_coins=10, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         if not tdomain:
             raise ValueError("tdomain is required")
 
-        self.tdomain_num = tdomain_to_num.get(tdomain, None)
+        self.tdomain_num = tdomain_to_num.get(tdomain)
 
         if self.tdomain_num is None:
             raise ValueError(f"Invalid time domain: '{tdomain}'")
+
+        self.number_of_coins = int(number_of_coins)
+
+        if not (1 <= self.number_of_coins <= 100):
+            raise ValueError("number_of_coins must be between 1 and 100.")
 
         self.start_urls = [
             "https://coinmarketcap.com"
@@ -76,7 +81,7 @@ class TopProfitSpider(scrapy.Spider):
 
         for cursor in response.xpath(
             '//table[contains(@class,"cmc-table")]//tbody[1]//tr'
-        )[:10]:
+        )[:self.number_of_coins]:
             yield {
                 "Name": cursor.xpath(
                     './/p[contains(@class,"coin-item-name")]/text()'
