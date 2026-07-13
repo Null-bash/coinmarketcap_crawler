@@ -22,6 +22,7 @@ DOWNLOAD_DELAY = 1
 # Cookies
 COOKIES_ENABLED = False
 
+
 # Downloader Middlewares
 DOWNLOADER_MIDDLEWARES = {
     "scrape.scrape.middlewares.ScrapeDownloaderMiddleware": 543,
