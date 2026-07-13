@@ -271,6 +271,33 @@ Because the symbol database is stored locally, subsequent searches are significa
 
 ---
 
+# 🧪 Running Tests
+
+This project uses **pytest** to verify that the spiders behave as expected. The test suite covers input validation, request generation, parsing logic, and other core functionality.
+
+Run all tests:
+
+```bash
+pytest
+```
+
+Run the tests for a specific spider:
+
+```bash
+pytest tests/test_all_cryptos.py
+```
+
+Replace `test_all_cryptos.py` with the corresponding test file for any other spider, for example:
+
+```bash
+pytest tests/test_converter.py
+pytest tests/test_symbol_search.py
+pytest tests/test_top_price.py
+pytest tests/test_top_profit.py
+```
+
+---
+
 # 📄 License
 
 This project is intended for **educational**, **learning**, and **personal** use.
