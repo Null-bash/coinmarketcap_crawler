@@ -2,6 +2,9 @@ from scrapy import signals
 
 
 def connect(crawler, collector):
+    """
+    Connect crawler events to the result collector handlers.
+    """
 
     crawler.signals.connect(
         collector.item_scraped,
@@ -16,10 +19,16 @@ def connect(crawler, collector):
     )
 
     def closed(spider, reason):
+        """
+        Update the job state when the spider finishes.
+        """
         job = collector.job
+
         if job.reason is None:
             job.reason = reason
+
         job.crawler = None
+
         if not job.done():
             job._done.set()
 

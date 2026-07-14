@@ -1,13 +1,21 @@
+"""
+Spider for collecting basic information about all cryptocurrencies listed
+on CoinMarketCap.
+"""
+
 import scrapy
 from scrapy_playwright.page import PageMethod
 from scrape.utils.script import scrolling_script
 
 
 class AllCryptoSpider(scrapy.Spider):
+    """Collect cryptocurrency names, symbols, and URL paths."""
+
     name = "all_crypto"
     allowed_domains = ["coinmarketcap.com"]
 
     def __init__(self, to_page=81, *args, **kwargs):
+        """Initialize the spider and generate the listing page URLs."""
         super().__init__(*args, **kwargs)
 
         try:
@@ -24,6 +32,7 @@ class AllCryptoSpider(scrapy.Spider):
         ]
 
     async def start(self):
+        """Generate the initial Playwright requests."""
         for url in self.start_urls:
             yield scrapy.Request(
                 url,
@@ -38,6 +47,7 @@ class AllCryptoSpider(scrapy.Spider):
             )
 
     async def parse(self, response):
+        """Extract the name, symbol, and URL path for each cryptocurrency."""
         page = response.meta["playwright_page"]
 
         html = await page.content()

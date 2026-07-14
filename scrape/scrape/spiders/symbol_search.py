@@ -4,10 +4,18 @@ from scrape.utils.all_crypto import get_url_by_sym
 
 
 class SymbolSearchSpider(scrapy.Spider):
+    """
+    Search for a cryptocurrency by its symbol and extract
+    basic information from its CoinMarketCap page.
+    """
+
     name = "symbol_search"
     allowed_domains = ["coinmarketcap.com"]
 
     def __init__(self, symbol=None, *args, **kwargs):
+        """
+        Validate the symbol and build the target CoinMarketCap URL.
+        """
         super().__init__(*args, **kwargs)
 
         if not symbol:
@@ -23,6 +31,9 @@ class SymbolSearchSpider(scrapy.Spider):
         ]
 
     async def start(self):
+        """
+        Send the initial Playwright request.
+        """
         for url in self.start_urls:
             yield scrapy.Request(
                 url,
@@ -37,6 +48,10 @@ class SymbolSearchSpider(scrapy.Spider):
             )
 
     async def parse(self, response):
+        """
+        Wait for the page to load, then extract the coin name
+        and current price.
+        """
         page = response.meta["playwright_page"]
 
         html = await page.content()

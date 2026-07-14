@@ -1,3 +1,4 @@
+# Playwright script that scrolls to the bottom of the page until all dynamic content is loaded.
 scrolling_script = """
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -21,6 +22,7 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 """
 
 
+# Test script that injects a visible message banner into the page.
 text_message = """
 () => {
     const div = document.createElement('div');

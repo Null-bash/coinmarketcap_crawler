@@ -10,10 +10,17 @@ tdomain_to_num = {
 
 
 class TopProfitSpider(scrapy.Spider):
+    """
+    Retrieve the top-performing cryptocurrencies based on a selected time period.
+    """
+
     name = "top_profit"
     allowed_domains = ["coinmarketcap.com"]
 
     def __init__(self, tdomain, number_of_coins=10, *args, **kwargs):
+        """
+        Validate the selected time period and the number of cryptocurrencies to retrieve.
+        """
         super().__init__(*args, **kwargs)
 
         if not tdomain:
@@ -34,6 +41,9 @@ class TopProfitSpider(scrapy.Spider):
         ]
 
     async def start(self):
+        """
+        Send the initial Playwright request.
+        """
         for url in self.start_urls:
             yield scrapy.Request(
                 url,
@@ -48,6 +58,9 @@ class TopProfitSpider(scrapy.Spider):
             )
 
     async def parse(self, response):
+        """
+        Sort cryptocurrencies by percentage gain and extract the top results.
+        """
         page = response.meta["playwright_page"]
 
         btn = page.get_by_role("button", name="Filters")
