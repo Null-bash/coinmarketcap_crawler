@@ -25,9 +25,9 @@ banner = r"""
 
 options = [
     "Search Cryptocurrency",
-    "Highest Prices",
-    "Highest Price Change",
-    "Currency Exchange",
+    "Highest Prices(1-100)",
+    "Highest Price Change(1-100)",
+    "Currency Convert",
     "Exit",
 ]
 
