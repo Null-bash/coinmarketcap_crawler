@@ -278,7 +278,7 @@ This project uses **pytest** to verify that the spiders behave as expected. The 
 Run all tests:
 
 ```bash
-pytest
+pytest tests/
 ```
 
 Run the tests for a specific spider:
