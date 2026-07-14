@@ -21,8 +21,14 @@ settings.setmodule(project_settings)
 
 
 class ScraperRunner:
+    """
+    Run Scrapy spiders programmatically in a background reactor thread.
+    """
 
     def __init__(self):
+        """
+        Initialize the crawler runner and start the Twisted reactor.
+        """
         self.runner = CrawlerRunner(settings)
 
         self._reactor_thread = threading.Thread(
@@ -36,7 +42,9 @@ class ScraperRunner:
         self._reactor_thread.start()
 
     def submit(self, spider_cls, **kwargs):
-
+        """
+        Start a spider and return a job object to track its progress.
+        """
         job = CrawlJob()
         collector = ListCollector(job)
 
@@ -79,5 +87,8 @@ class ScraperRunner:
         return job
 
     def shutdown(self):
+        """
+        Stop the reactor and cleanly shut down the runner thread.
+        """
         reactor.callFromThread(reactor.stop)
         self._reactor_thread.join()

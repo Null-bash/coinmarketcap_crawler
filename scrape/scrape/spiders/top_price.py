@@ -3,10 +3,17 @@ from scrapy_playwright.page import PageMethod
 
 
 class TopPriceSpider(scrapy.Spider):
+    """
+    Retrieve the highest-priced cryptocurrencies listed on CoinMarketCap.
+    """
+
     name = "top_price"
     allowed_domains = ["coinmarketcap.com"]
 
     def __init__(self, number_of_coins=10, *args, **kwargs):
+        """
+        Validate the requested number of cryptocurrencies to retrieve.
+        """
         super().__init__(*args, **kwargs)
 
         self.number_of_coins = int(number_of_coins)
@@ -19,6 +26,9 @@ class TopPriceSpider(scrapy.Spider):
         ]
 
     async def start(self):
+        """
+        Send the initial Playwright request.
+        """
         for url in self.start_urls:
             yield scrapy.Request(
                 url,
@@ -33,6 +43,9 @@ class TopPriceSpider(scrapy.Spider):
             )
 
     async def parse(self, response):
+        """
+        Sort cryptocurrencies by price and extract the top results.
+        """
         page = response.meta["playwright_page"]
 
         btn = page.get_by_role("button", name="Filters")

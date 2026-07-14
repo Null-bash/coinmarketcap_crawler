@@ -1,7 +1,14 @@
+"""
+Spider for converting one cryptocurrency into another using
+CoinMarketCap's live converter.
+"""
+
 import scrapy
 
 
 class ConvertSpider(scrapy.Spider):
+    """Convert a cryptocurrency amount into another cryptocurrency."""
+
     name = "converter"
     allowed_domains = ["coinmarketcap.com"]
 
@@ -15,6 +22,7 @@ class ConvertSpider(scrapy.Spider):
     TO_INPUT = 'xpath=//*[@id="react-select-cmc-select__to-input"]'
 
     def __init__(self, from_coin=None, to_coin=None, *args, **kwargs):
+        """Initialize the spider with the source and target coin symbols."""
         super().__init__(*args, **kwargs)
 
         if not from_coin:
@@ -37,6 +45,7 @@ class ConvertSpider(scrapy.Spider):
         ]
 
     async def start(self):
+        """Generate the initial Playwright request."""
         for url in self.start_urls:
             yield scrapy.Request(
                 url,
@@ -51,6 +60,7 @@ class ConvertSpider(scrapy.Spider):
             )
 
     async def select_coin(self, page, input_selector, coin):
+        """Select a cryptocurrency from the converter dropdown."""
         inp = page.locator(input_selector)
         await inp.wait_for()
         await inp.fill(coin)
@@ -68,6 +78,7 @@ class ConvertSpider(scrapy.Spider):
         await option.click()
 
     async def parse(self, response):
+        """Perform the conversion and extract the resulting values."""
         page = response.meta["playwright_page"]
 
         try:
