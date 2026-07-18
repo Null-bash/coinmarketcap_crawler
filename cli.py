@@ -1,13 +1,12 @@
-from scrape.core.runner import ScraperRunner
+import time
 
+from scrape.core.job_executor import execute_job
+from scrape.core.runner import ScraperRunner
 from scrape.scrape.spiders.symbol_search import SymbolSearchSpider
 from scrape.scrape.spiders.top_price import TopPriceSpider
 from scrape.scrape.spiders.top_profit import TopProfitSpider
 from scrape.scrape.spiders.converter import ConvertSpider
-
 from simple_term_menu import TerminalMenu
-
-import time
 
 
 banner = r"""
@@ -35,15 +34,16 @@ options = [
 def search_for_coin(runner: ScraperRunner):
     symbol = input("Crypto symbol: ")
     try:
-        job = runner.submit(
+        res = execute_job(
+            runner,
             SymbolSearchSpider,
-            symbol=symbol
+            symbol=symbol,
         )
-        res = job.result()
     except Exception as e:
         print(e)
     else:
         print(res)
+
 
 def top_by_price(runner: ScraperRunner):
     while True:
@@ -61,17 +61,16 @@ def top_by_price(runner: ScraperRunner):
             print("Please enter a valid number.")
 
     try:
-        job = runner.submit(
+        res = execute_job(
+            runner,
             TopPriceSpider,
             number_of_coins=number_of_coins,
         )
-        res = job.result()
-
     except Exception as e:
         print(e)
-
     else:
         print(res)
+
 
 def top_by_price_change(runner: ScraperRunner):
     tdomain = input("Time range (1h/24h/7d): ")
@@ -91,37 +90,41 @@ def top_by_price_change(runner: ScraperRunner):
             print("Please enter a valid number.")
 
     try:
-        job = runner.submit(
+        res = execute_job(
+            runner,
             TopProfitSpider,
             tdomain=tdomain,
             number_of_coins=number_of_coins,
         )
-        res = job.result()
-
     except Exception as e:
         print(e)
-
     else:
         print(res)
+
 
 def converter(runner: ScraperRunner):
     from_coin = input("From Crypto: ")
     to_coin = input("To Crypto: ")
+
     try:
-        job = runner.submit(
+        res = execute_job(
+            runner,
             ConvertSpider,
             from_coin=from_coin,
             to_coin=to_coin,
         )
-        res = job.result()
     except Exception as e:
         print(e)
     else:
         print(res)
 
+
 def menu(options, runner: ScraperRunner):
     while True:
-        choice = TerminalMenu(options, title="Select your operation:").show()
+        choice = TerminalMenu(
+            options,
+            title="Select your operation:"
+        ).show()
 
         if choice == 0:
             search_for_coin(runner)
@@ -134,24 +137,23 @@ def menu(options, runner: ScraperRunner):
         else:
             break
 
-        # TerminalMenu(["Press Enter..."]).show()
         input("Press Enter...")
+
 
 def show_banner(banner: str):
     for char in banner:
-        print(char, end='', flush=True)
+        print(char, end="", flush=True)
         if char.isalpha():
             time.sleep(0.05)
 
-def main():
-    global banner
-    global options
 
+def main():
     runner = ScraperRunner()
 
     show_banner(banner)
     menu(options, runner)
     runner.shutdown()
+
 
 if __name__ == "__main__":
     main()
