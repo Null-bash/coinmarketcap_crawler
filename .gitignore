@@ -167,3 +167,8 @@ storage/documents/
 alembic/versions/*
 # Keep the versions directory
 !alembic/versions/.keep
+
+# customize ignaration
+scrape/core/__pycache__
+scrape/utils/__pycache__
+scrape/scrape/__pycache__
