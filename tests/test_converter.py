@@ -13,7 +13,6 @@ import pytest
 
 from scrape.scrape.spiders.converter import ConvertSpider
 
-
 # ============================================================================
 # __init__
 #

@@ -1,5 +1,6 @@
 import scrapy
 from scrapy_playwright.page import PageMethod
+
 from scrape.utils.all_crypto import get_url_by_sym
 
 

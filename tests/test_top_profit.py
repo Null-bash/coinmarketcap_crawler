@@ -10,11 +10,7 @@ Covered functionality:
 
 import pytest
 
-from scrape.scrape.spiders.top_profit import (
-    TopProfitSpider,
-    tdomain_to_num,
-)
-
+from scrape.scrape.spiders.top_profit import TopProfitSpider, tdomain_to_num
 
 # ============================================================================
 # __init__

@@ -9,11 +9,9 @@ Covers:
 """
 
 import pytest
-
 from scrapy_playwright.page import PageMethod
 
 from scrape.scrape.spiders.all_cryptos import AllCryptoSpider
-
 
 # ============================================================================
 # __init__

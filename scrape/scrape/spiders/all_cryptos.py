@@ -5,6 +5,7 @@ on CoinMarketCap.
 
 import scrapy
 from scrapy_playwright.page import PageMethod
+
 from scrape.utils.script import scrolling_script
 
 
@@ -27,8 +28,7 @@ class AllCryptoSpider(scrapy.Spider):
             raise ValueError("to_page must be greater than 0")
 
         self.start_urls = [
-            f"https://coinmarketcap.com/?page={x}"
-            for x in range(1, self.to_page + 1)
+            f"https://coinmarketcap.com/?page={x}" for x in range(1, self.to_page + 1)
         ]
 
     async def start(self):
@@ -54,21 +54,21 @@ class AllCryptoSpider(scrapy.Spider):
 
         response = response.replace(body=html)
 
-        for cursor in response.xpath('//table[contains(@class,"cmc-table")]//tbody[1]//tr'):
+        for cursor in response.xpath(
+            '//table[contains(@class,"cmc-table")]//tbody[1]//tr'
+        ):
             yield {
                 "Name": cursor.xpath(
                     './/p[contains(@class,"coin-item-name")]/text()'
-                    ' | '
-                    './/a//span[2]/text()'
+                    " | "
+                    ".//a//span[2]/text()"
                 ).get(),
-
                 "Symbol": cursor.xpath(
                     './/p[contains(@class,"coin-item-symbol")]/text()'
-                    ' | '
+                    " | "
                     './/span[contains(@class,"crypto-symbol")]/text()'
                 ).get(),
-
-                "web_path": cursor.xpath('.//a/@href').get(),
+                "web_path": cursor.xpath(".//a/@href").get(),
             }
 
         await page.close()

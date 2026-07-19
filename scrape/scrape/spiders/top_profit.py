@@ -1,7 +1,6 @@
 import scrapy
 from scrapy_playwright.page import PageMethod
 
-
 tdomain_to_num = {
     "1h": 5,
     "24h": 6,

@@ -5,9 +5,9 @@ Provides mocked Playwright page and Scrapy response objects
 for testing spiders without opening a real browser.
 """
 
-import pytest
-
 from unittest.mock import AsyncMock, MagicMock
+
+import pytest
 from scrapy.http import HtmlResponse, Request
 
 

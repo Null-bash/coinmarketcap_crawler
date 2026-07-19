@@ -1,13 +1,13 @@
 import time
 
+from simple_term_menu import TerminalMenu
+
 from scrape.core.job_executor import execute_job
 from scrape.core.runner import ScraperRunner
+from scrape.scrape.spiders.converter import ConvertSpider
 from scrape.scrape.spiders.symbol_search import SymbolSearchSpider
 from scrape.scrape.spiders.top_price import TopPriceSpider
 from scrape.scrape.spiders.top_profit import TopProfitSpider
-from scrape.scrape.spiders.converter import ConvertSpider
-from simple_term_menu import TerminalMenu
-
 
 banner = r"""
  ██████╗██████╗ ██╗   ██╗██████╗ ████████╗ ██████╗

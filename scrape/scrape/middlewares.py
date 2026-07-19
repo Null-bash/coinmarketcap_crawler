@@ -3,12 +3,11 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-from scrapy import signals
+import random
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
-
-import random
+from scrapy import signals
 
 
 class ScrapeDownloaderMiddleware:

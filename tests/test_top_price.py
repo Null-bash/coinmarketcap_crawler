@@ -12,7 +12,6 @@ import pytest
 
 from scrape.scrape.spiders.top_price import TopPriceSpider
 
-
 # ============================================================================
 # __init__
 #

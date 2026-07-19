@@ -13,7 +13,6 @@ import pytest
 
 from scrape.scrape.spiders.symbol_search import SymbolSearchSpider
 
-
 # ============================================================================
 # __init__
 #
